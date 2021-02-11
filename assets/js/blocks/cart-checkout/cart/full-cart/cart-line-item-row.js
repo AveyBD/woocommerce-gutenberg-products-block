@@ -3,7 +3,7 @@
  */
 import { useMemo } from '@wordpress/element';
 import classnames from 'classnames';
-import { sprintf, __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import QuantitySelector from '@woocommerce/base-components/quantity-selector';
 import ProductPrice from '@woocommerce/base-components/product-price';
@@ -17,7 +17,11 @@ import {
 	ProductSaleBadge,
 } from '@woocommerce/base-components/cart-checkout';
 import { getCurrency } from '@woocommerce/price-format';
-import { __experimentalApplyCheckoutFilter } from '@woocommerce/blocks-checkout';
+import {
+	__experimentalApplyCheckoutFilter,
+	mustBeString,
+	mustContain,
+} from '@woocommerce/blocks-checkout';
 import Dinero from 'dinero.js';
 
 /**
@@ -104,21 +108,7 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 				arg: {
 					context: 'cart',
 				},
-				validation: ( value ) => {
-					if ( typeof value !== 'string' ) {
-						throw Error(
-							sprintf(
-								// translators: %s is type of value passed
-								__(
-									'Returned value must be a string, you passed %s',
-									'woo-gutenberg-products-block'
-								),
-								typeof value
-							)
-						);
-					}
-					return true;
-				},
+				validation: ( value ) => mustBeString( value ),
 			} ),
 		[ initialName, extensions ]
 	);
@@ -155,34 +145,8 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 					cartItem: lineItem,
 					context: 'cart',
 				},
-				validation: ( value ) => {
-					if ( typeof value !== 'string' ) {
-						throw Error(
-							sprintf(
-								// translators: %s is type of value passed
-								__(
-									'Returned value must be a string, you passed %s',
-									'woo-gutenberg-products-block'
-								),
-								typeof value
-							)
-						);
-					}
-
-					if ( ! value.includes( '<price/>' ) ) {
-						throw Error(
-							sprintf(
-								// translators: %s value passed to filter.
-								__(
-									'Returned value must include <price/>, you passed %s',
-									'woo-gutenberg-products-block'
-								),
-								value
-							)
-						);
-					}
-					return true;
-				},
+				validation: ( value ) =>
+					mustBeString( value ) && mustContain( value, '<price/>' ),
 			} ),
 		[ lineItem, extensions ]
 	);
@@ -197,34 +161,8 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 					lineItem,
 				},
 				// Only accept strings.
-				validation: ( value ) => {
-					if ( typeof value !== 'string' ) {
-						throw Error(
-							sprintf(
-								// translators: %s is type of value passed
-								__(
-									'Returned value must be a string, you passed %s',
-									'woo-gutenberg-products-block'
-								),
-								typeof value
-							)
-						);
-					}
-
-					if ( ! value.includes( '<price/>' ) ) {
-						throw Error(
-							sprintf(
-								// translators: %s value passed to filter.
-								__(
-									'Returned value must include <price/>, you passed %s',
-									'woo-gutenberg-products-block'
-								),
-								value
-							)
-						);
-					}
-					return true;
-				},
+				validation: ( value ) =>
+					mustBeString( value ) && mustContain( value, '<price/>' ),
 			} ),
 		[ lineItem, extensions ]
 	);
@@ -239,34 +177,8 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 					lineItem,
 				},
 				// Only accept strings.
-				validation: ( value ) => {
-					if ( typeof value !== 'string' ) {
-						throw Error(
-							sprintf(
-								// translators: %s is type of value passed
-								__(
-									'Returned value must be a string, you passed %s',
-									'woo-gutenberg-products-block'
-								),
-								typeof value
-							)
-						);
-					}
-
-					if ( ! value.includes( '<price/>' ) ) {
-						throw Error(
-							sprintf(
-								// translators: %s value passed to filter.
-								__(
-									'Returned value must include <price/>, you passed %s',
-									'woo-gutenberg-products-block'
-								),
-								value
-							)
-						);
-					}
-					return true;
-				},
+				validation: ( value ) =>
+					mustBeString( value ) && mustContain( value, '<price/>' ),
 			} ),
 		[ lineItem, extensions ]
 	);
