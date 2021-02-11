@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 import PropTypes from 'prop-types';
 import QuantitySelector from '@woocommerce/base-components/quantity-selector';
 import ProductPrice from '@woocommerce/base-components/product-price';
@@ -101,7 +101,21 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 			extensions,
 			context: 'cart',
 		},
-		validation: ( value ) => typeof value === 'string',
+		validation: ( value ) => {
+			if ( typeof value !== 'string' ) {
+				throw Error(
+					sprintf(
+						// translators: %s is type of value passed
+						__(
+							'Returned value must be a string, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						typeof value
+					)
+				);
+			}
+			return true;
+		},
 	} );
 
 	const regularAmountSingle = Dinero( {
@@ -133,8 +147,34 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 			cartItem: lineItem,
 			block: 'cart',
 		},
-		validation: ( value ) =>
-			typeof value === 'string' && value.includes( '<price/>' ),
+		validation: ( value ) => {
+			if ( typeof value !== 'string' ) {
+				throw Error(
+					sprintf(
+						// translators: %s is type of value passed
+						__(
+							'Returned value must be a string, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						typeof value
+					)
+				);
+			}
+
+			if ( ! value.includes( '<price/>' ) ) {
+				throw Error(
+					sprintf(
+						// translators: %s value passed to filter.
+						__(
+							'Returned value must include <price/>, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						value
+					)
+				);
+			}
+			return true;
+		},
 	} );
 
 	const subtotalPriceFormat = __experimentalApplyCheckoutFilter( {
@@ -144,8 +184,34 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 			lineItem,
 		},
 		// Only accept strings.
-		validation: ( value ) =>
-			typeof value === 'string' && value.includes( '<price/>' ),
+		validation: ( value ) => {
+			if ( typeof value !== 'string' ) {
+				throw Error(
+					sprintf(
+						// translators: %s is type of value passed
+						__(
+							'Returned value must be a string, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						typeof value
+					)
+				);
+			}
+
+			if ( ! value.includes( '<price/>' ) ) {
+				throw Error(
+					sprintf(
+						// translators: %s value passed to filter.
+						__(
+							'Returned value must include <price/>, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						value
+					)
+				);
+			}
+			return true;
+		},
 	} );
 
 	const saleBadgePriceFormat = __experimentalApplyCheckoutFilter( {
@@ -155,8 +221,34 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 			lineItem,
 		},
 		// Only accept strings.
-		validation: ( value ) =>
-			typeof value === 'string' && value.includes( '<price/>' ),
+		validation: ( value ) => {
+			if ( typeof value !== 'string' ) {
+				throw Error(
+					sprintf(
+						// translators: %s is type of value passed
+						__(
+							'Returned value must be a string, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						typeof value
+					)
+				);
+			}
+
+			if ( ! value.includes( '<price/>' ) ) {
+				throw Error(
+					sprintf(
+						// translators: %s value passed to filter.
+						__(
+							'Returned value must include <price/>, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						value
+					)
+				);
+			}
+			return true;
+		},
 	} );
 
 	return (

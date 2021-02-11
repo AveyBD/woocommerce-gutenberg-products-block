@@ -44,7 +44,22 @@ const OrderSummaryItem = ( { cartItem } ) => {
 			extensions,
 			context: 'summary',
 		},
-		validation: ( value ) => typeof value === 'string',
+		validation: ( value ) => {
+			if ( typeof value !== 'string' ) {
+				throw Error(
+					sprintf(
+						// translators: %s is type of value passed
+						__(
+							'Returned value must be a string, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						typeof value
+					)
+				);
+			}
+
+			return true;
+		},
 	} );
 
 	const regularPriceSingle = Dinero( {
@@ -72,8 +87,34 @@ const OrderSummaryItem = ( { cartItem } ) => {
 			lineItem: cartItem,
 		},
 		// Only accept strings.
-		validation: ( value ) =>
-			typeof value === 'string' && value.includes( '<price/>' ),
+		validation: ( value ) => {
+			if ( typeof value !== 'string' ) {
+				throw Error(
+					sprintf(
+						// translators: %s is type of value passed
+						__(
+							'Returned value must be a string, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						typeof value
+					)
+				);
+			}
+
+			if ( ! value.includes( '<price/>' ) ) {
+				throw Error(
+					sprintf(
+						// translators: %s value passed to filter.
+						__(
+							'Returned value must include <price/>, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						value
+					)
+				);
+			}
+			return true;
+		},
 	} );
 
 	// Allow extensions to filter how the price is displayed. Ie: prepending or appending some values.
@@ -84,8 +125,34 @@ const OrderSummaryItem = ( { cartItem } ) => {
 			cartItem,
 			block: 'checkout',
 		},
-		validation: ( value ) =>
-			typeof value === 'string' && value.includes( '<price/>' ),
+		validation: ( value ) => {
+			if ( typeof value !== 'string' ) {
+				throw Error(
+					sprintf(
+						// translators: %s is type of value passed
+						__(
+							'Returned value must be a string, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						typeof value
+					)
+				);
+			}
+
+			if ( ! value.includes( '<price/>' ) ) {
+				throw Error(
+					sprintf(
+						// translators: %s value passed to filter.
+						__(
+							'Returned value must include <price/>, you passed %s',
+							'woo-gutenberg-products-block'
+						),
+						value
+					)
+				);
+			}
+			return true;
+		},
 	} );
 
 	return (
