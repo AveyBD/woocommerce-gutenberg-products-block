@@ -100,8 +100,8 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 			__experimentalApplyCheckoutFilter( {
 				filterName: 'itemName',
 				defaultValue: initialName,
+				extensions,
 				arg: {
-					extensions,
 					context: 'cart',
 				},
 				validation: ( value ) => {
@@ -150,9 +150,10 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 			__experimentalApplyCheckoutFilter( {
 				filterName: 'cartItemPrice',
 				defaultValue: '<price/>',
+				extensions,
 				arg: {
 					cartItem: lineItem,
-					block: 'cart',
+					context: 'cart',
 				},
 				validation: ( value ) => {
 					if ( typeof value !== 'string' ) {
@@ -183,7 +184,7 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 					return true;
 				},
 			} ),
-		[ lineItem ]
+		[ lineItem, extensions ]
 	);
 
 	const subtotalPriceFormat = useMemo(
@@ -191,6 +192,7 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 			__experimentalApplyCheckoutFilter( {
 				filterName: 'subtotalPriceFormat',
 				defaultValue: '<price/>',
+				extensions,
 				arg: {
 					lineItem,
 				},
@@ -224,7 +226,7 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 					return true;
 				},
 			} ),
-		[ lineItem ]
+		[ lineItem, extensions ]
 	);
 
 	const saleBadgePriceFormat = useMemo(
@@ -232,6 +234,7 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 			__experimentalApplyCheckoutFilter( {
 				filterName: 'saleBadgePriceFormat',
 				defaultValue: '<price/>',
+				extensions,
 				arg: {
 					lineItem,
 				},
@@ -265,7 +268,7 @@ const CartLineItemRow = ( { lineItem = {} } ) => {
 					return true;
 				},
 			} ),
-		[ lineItem ]
+		[ lineItem, extensions ]
 	);
 
 	return (

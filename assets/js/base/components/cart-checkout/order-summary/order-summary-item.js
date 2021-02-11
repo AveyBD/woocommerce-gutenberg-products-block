@@ -43,8 +43,8 @@ const OrderSummaryItem = ( { cartItem } ) => {
 			__experimentalApplyCheckoutFilter( {
 				filterName: 'itemName',
 				defaultValue: initialName,
+				extensions,
 				arg: {
-					extensions,
 					context: 'summary',
 				},
 				validation: ( value ) => {
@@ -90,6 +90,7 @@ const OrderSummaryItem = ( { cartItem } ) => {
 			__experimentalApplyCheckoutFilter( {
 				filterName: 'subtotalPriceFormat',
 				defaultValue: '<price/>',
+				extensions,
 				arg: {
 					lineItem: cartItem,
 				},
@@ -123,7 +124,7 @@ const OrderSummaryItem = ( { cartItem } ) => {
 					return true;
 				},
 			} ),
-		[ cartItem ]
+		[ cartItem, extensions ]
 	);
 
 	// Allow extensions to filter how the price is displayed. Ie: prepending or appending some values.
@@ -132,9 +133,10 @@ const OrderSummaryItem = ( { cartItem } ) => {
 			__experimentalApplyCheckoutFilter( {
 				filterName: 'cartItemPrice',
 				defaultValue: '<price/>',
+				extensions,
 				arg: {
-					cartItem,
-					block: 'checkout',
+					lineItem: cartItem,
+					context: 'checkout',
 				},
 				validation: ( value ) => {
 					if ( typeof value !== 'string' ) {
@@ -165,7 +167,7 @@ const OrderSummaryItem = ( { cartItem } ) => {
 					return true;
 				},
 			} ),
-		[ cartItem ]
+		[ cartItem, extensions ]
 	);
 
 	return (
